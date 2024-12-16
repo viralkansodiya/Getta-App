@@ -3,6 +3,9 @@ from urllib.parse import urlparse
 from urllib.parse import urlencode, urlunparse
 
 def validate(self, method):
+    WS = frappe.get_doc("WhatsApp Settings")
+    if not WS.enabled:
+        return
     if self.allocated_to:
         to =  frappe.db.get_value("User", self.allocated_to, "mobile_no") or frappe.db.get_value("User", self.allocated_to, "phone") 
         reference_doctype = self.reference_type
