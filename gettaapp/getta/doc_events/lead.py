@@ -16,6 +16,9 @@ def validate(self, method):
 
 
 def send_template(to, reference_doctype, reference_name, message):
+    WS = frappe.get_doc("WhatsApp Settings")
+    if not WS.enabled:
+        return
     try:
         doc = frappe.get_doc({
             "doctype": "WhatsApp Message",
