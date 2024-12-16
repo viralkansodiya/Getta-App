@@ -153,8 +153,12 @@ doc_events = {
     },
     "ToDo" : {
         "validate" : "gettaapp.getta.doc_events.ToDo.validate"
+    },
+    "Asset":{
+        "validate" : "gettaapp.getta.doc_events.asset.validate",
+        "on_update" : "gettaapp.getta.doc_events.asset.on_update"
     }
-}
+ }
 
 # Scheduled Tasks
 # ---------------
