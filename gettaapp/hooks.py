@@ -144,6 +144,17 @@ app_license = "mit"
 # 		"on_trash": "method"
 # 	}
 # }
+doc_events = {
+    "Lead" : {
+        "validate" : "gettaapp.getta.doc_events.lead.validate"
+    },
+    "Item" :{
+        "before_naming" : "gettaapp.getta.doc_events.item.before_naming"
+    },
+    "ToDo" : {
+        "validate" : "gettaapp.getta.doc_events.ToDo.validate"
+    }
+}
 
 # Scheduled Tasks
 # ---------------
