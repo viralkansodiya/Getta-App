@@ -114,3 +114,4 @@ def notify_user(self):
 			subject="ToDo Assignment",
 			message = message
 		)
+        self.is_email_sent = 1
