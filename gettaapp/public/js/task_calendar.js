@@ -12,18 +12,7 @@ frappe.views.calendar["Task"] = {
 	},
 	gantt: true,
 	filters: [
-		{
-			fieldtype: "Select",
-			fieldname: "status",
-			options: ["Open",
-					"Working",
-					"Pending Review",
-					"Overdue",
-					"Template",
-					"Completed",
-					"Cancelled",],
-			label: __("Status"),
-		},
+		
 	],
 	get_events_method: "gettaapp.getta.doc_events.task.get_task_data",
 	get_css_class: function (data) {

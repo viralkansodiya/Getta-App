@@ -106,7 +106,7 @@ def notify_user(self):
 
 
               """.format(
-            self.allocated_to, self.description, self.assigned_by, self.date, frappe.db.get_value("User", self.assigned_by, "full_name"), get_link_to_form("ToDo", self.name)
+            frappe.db.get_value("User", self.allocated_to, "full_name"), self.description, frappe.db.get_value("User", self.assigned_by, "full_name"), self.date, frappe.db.get_value("User", self.assigned_by, "full_name"), get_link_to_form("ToDo", self.name)
         )
 
         frappe.sendmail(
