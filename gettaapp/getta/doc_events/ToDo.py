@@ -3,11 +3,10 @@ from urllib.parse import urlparse
 from urllib.parse import urlencode, urlunparse
 from frappe.utils import get_link_to_form
 from frappe import _
+import request
+
 def validate(self, method):
     notify_user(self)
-    WS = frappe.get_doc("WhatsApp Settings")
-    if not WS.enabled:
-        return
     if self.allocated_to:
         to =  frappe.db.get_value("User", self.allocated_to, "mobile_no") or frappe.db.get_value("User", self.allocated_to, "phone") 
         reference_doctype = self.reference_type
@@ -26,39 +25,6 @@ def validate(self, method):
         # Construct the final URL
         final_url = f"{base_url}/app/item/{encoded_path}"
 
-
-
-        if to:
-            if self.status == "Open":
-                message = f"""
-                    *Assignment of {self.reference_name}*\n\nHi {frappe.db.get_value('User', self.allocated_to, 'full_name')},\n\nYou have been assigned a new {self.reference_type}. Please review the details and follow up promptly.\n\n*{self.reference_type} ID:* {self.reference_name}\n\nView Lead Details: "{final_url}"
-                """
-            
-            if self.status == "Cancelled":
-                message = f"""
-                    *Assignment Removed {self.reference_name}*\n\nHi {frappe.db.get_value('User', self.allocated_to, 'full_name')},\n\nAssignment has been removed from {self.reference_type} {self.reference_name}. .\n\n*{self.reference_type} ID:* {self.reference_name}\n\nView Details: "{final_url}"
-                """
-            if reference_doctype and reference_name:
-                send_template(to, reference_doctype, reference_name, message)
-    
-
-
-def send_template(to, reference_doctype, reference_name, message):
-    try:
-        doc = frappe.get_doc({
-            "doctype": "WhatsApp Message",
-            "to": to,
-            "type": "Outgoing",
-            "message_type": "Manual",
-            "reference_doctype": reference_doctype,
-            "reference_name": reference_name,
-            "content_type": "text",
-            "message" : message
-        })
-
-        doc.save()
-    except Exception as e:
-        raise e
     
 def notify_user(self):
     if self.is_email_sent:
